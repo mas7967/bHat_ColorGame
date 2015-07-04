@@ -1,5 +1,8 @@
 package com.bhat.colorgame;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,7 +16,6 @@ public class ColorGameActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_color_game);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
