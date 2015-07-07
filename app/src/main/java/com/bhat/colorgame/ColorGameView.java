@@ -28,10 +28,38 @@ public class ColorGameView extends View {
 
     @Override
     public void onDraw(Canvas canvas) {
-        for (int i = 1; i <= myColorGameBoard.numOfBlocks; i++) {
-            paintMain.setColor(Color.argb(64, r.nextInt(255), r.nextInt(255), r.nextInt(255)));
-            Rect rect = new Rect(r.nextInt(getWidth()/2), r.nextInt(getHeight()/2), r.nextInt(1000), r.nextInt(1900));
-            canvas.drawRect(rect, paintMain);
+       // canvas.drawARGB(255,0,0,0);
+
+        // Get the current level
+        int n = myColorGameBoard.numOfBlocks;
+        int diff = myColorGameBoard.RGB_difference;
+        int red = r.nextInt(255 - diff);
+        int grn = r.nextInt(255 - diff);
+        int blu = r.nextInt(255 - diff);
+
+        paintMain.setColor(Color.argb(255, red, grn, blu));
+        paintSpecial.setColor(Color.argb(255, red+diff, grn+diff, blu+diff));
+
+        int myI = r.nextInt(n)+1;
+        int myJ = r.nextInt(n)+1;
+
+        int padding = 15;
+        int trueSize = (getWidth() - (n+1)*padding) / n;
+
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= n; j++) {
+                int left = j*padding + (j-1)*trueSize;
+                int top = (getHeight()/6) + (i-1)*padding + (i-1)*trueSize;
+
+                Rect rect = new Rect(left, top, left+trueSize, top+trueSize);
+                if((myI==i)&&(myJ==j)){
+                    canvas.drawRect(rect, paintSpecial);
+                } else {
+                    canvas.drawRect(rect, paintMain);
+                }
+            }
         }
+
+
     }
 }

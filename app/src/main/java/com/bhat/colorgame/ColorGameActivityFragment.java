@@ -58,7 +58,19 @@ public class ColorGameActivityFragment extends Fragment implements OnTouchListen
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        colorGameBoard.setNumberOfBlocks(colorGameBoard.numOfBlocks + 1);
+        // Check if the thing is correct, if so, level up
+        if(true){
+            colorGameBoard.levelUp();
+        }
+
+        int x = colorGameBoard.level;
+        int temp = (int) Math.floor(-0.006063*Math.pow(x,2) + 0.3827*x + 2.421);
+
+        if(colorGameBoard.level >= 30){
+            temp = 9;
+        }
+
+        colorGameBoard.setNumberOfBlocks(temp);
 
         myCGV.invalidate();
 
