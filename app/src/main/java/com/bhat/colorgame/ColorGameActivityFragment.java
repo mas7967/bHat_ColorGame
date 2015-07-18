@@ -29,20 +29,21 @@ public class ColorGameActivityFragment extends Fragment implements OnTouchListen
                              Bundle savedInstanceState) {
         myView = inflater.inflate(R.layout.fragment_color_game, container, false);
 
-        colorGameBoard = new ColorGameBoard();
+        //colorGameBoard = new ColorGameBoard();
 
-        RelativeLayout relativeLayout = (RelativeLayout) myView.findViewById(R.id.cgv);
-        myCGV = new ColorGameView(getActivity(), colorGameBoard);
+//        RelativeLayout relativeLayout = (RelativeLayout) myView.findViewById(R.id.cgv);
+  //      myCGV = new ColorGameView(getActivity(), colorGameBoard);
 
-        relativeLayout.addView(myCGV);
+    //    relativeLayout.addView(myCGV);
 
-        myCGV.setOnTouchListener(this);
+      //  myCGV.setOnTouchListener(this);
 
         return myView;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        setRetainInstance(true);
         super.onCreate(savedInstanceState);
     }
 
