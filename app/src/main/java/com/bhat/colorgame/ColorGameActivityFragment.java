@@ -1,25 +1,38 @@
 package com.bhat.colorgame;
 
 import android.content.DialogInterface;
+import android.graphics.Point;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.view.View.OnTouchListener;
+
+import java.util.ArrayList;
 
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class ColorGameActivityFragment extends Fragment implements OnTouchListener{
+public class ColorGameActivityFragment extends Fragment implements AdapterView.OnItemClickListener{
 
     ColorGameBoard colorGameBoard;
 
     View myView;
     ColorGameView myCGV;
+
+    GridView myGridView;
+    ColorGameGridAdapter myColorGameGridAdapter;
+
+    ColorGameController myColorGameController;
+
 
     public ColorGameActivityFragment() {
     }
@@ -29,14 +42,17 @@ public class ColorGameActivityFragment extends Fragment implements OnTouchListen
                              Bundle savedInstanceState) {
         myView = inflater.inflate(R.layout.fragment_color_game, container, false);
 
-        //colorGameBoard = new ColorGameBoard();
+        myGridView = (GridView) myView.findViewById(R.id.color_game_grid);
 
-//        RelativeLayout relativeLayout = (RelativeLayout) myView.findViewById(R.id.cgv);
-  //      myCGV = new ColorGameView(getActivity(), colorGameBoard);
+        myColorGameGridAdapter = new ColorGameGridAdapter(getActivity(), inflater, myColorGameController.getGridPieces());
+        myGridView.setAdapter(myColorGameGridAdapter);
 
-    //    relativeLayout.addView(myCGV);
+        myGridView.setNumColumns(myColorGameController.getNumberOfColumns());
+        Point size = new Point();
+        getActivity().getWindowManager().getDefaultDisplay().getSize(size);
+        myGridView.setLayoutParams(new LinearLayout.LayoutParams(size.x, size.x));
 
-      //  myCGV.setOnTouchListener(this);
+        myGridView.setOnItemClickListener(this);
 
         return myView;
     }
@@ -45,6 +61,11 @@ public class ColorGameActivityFragment extends Fragment implements OnTouchListen
     public void onCreate(Bundle savedInstanceState) {
         setRetainInstance(true);
         super.onCreate(savedInstanceState);
+        Point size = new Point();
+        getActivity().getWindowManager().getDefaultDisplay().getSize(size);
+
+        myColorGameController = new ColorGameController(size.x);
+
     }
 
     @Override
@@ -58,23 +79,12 @@ public class ColorGameActivityFragment extends Fragment implements OnTouchListen
     }
 
     @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        // Check if the thing is correct, if so, level up
-        if(true){
-            colorGameBoard.levelUp();
-        }
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        int x = colorGameBoard.level;
-        int temp = (int) Math.floor(-0.006063*Math.pow(x,2) + 0.3827*x + 2.421);
+        myColorGameController.levelUp();
+        myGridView.setNumColumns(myColorGameController.getNumberOfColumns());
+        myColorGameGridAdapter.setGridPieces(myColorGameController.getGridPieces());
 
-        if(colorGameBoard.level >= 30){
-            temp = 9;
-        }
 
-        colorGameBoard.setNumberOfBlocks(temp);
-
-        myCGV.invalidate();
-
-        return false;
     }
 }

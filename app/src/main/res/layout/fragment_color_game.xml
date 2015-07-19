@@ -11,35 +11,59 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:weightSum="100">
+
+
 
         <LinearLayout
             android:orientation="horizontal"
+            android:layout_weight="25"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Large Text"
-                android:id="@+id/textView2"
-                android:layout_gravity="center_horizontal" />
+                android:text="Score: 0"
+                android:id="@+id/scoreText"
+                android:gravity="left"
+                android:textColor="@color/abc_primary_text_material_dark"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" >
+            </View>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Large Text"
-                android:id="@+id/textView3" />
+                android:text="1:00.00"
+                android:id="@+id/timeText"
+                android:gravity="right"
+                android:textColor="@color/abc_primary_text_material_dark"/>
         </LinearLayout>
 
+
+
         <GridView
+            android:layout_weight="50"
             android:layout_width="wrap_content"
             android:layout_height="200dp"
-            android:id="@+id/gridView" />
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:id="@+id/color_game_grid" />
+
+
+
 
         <LinearLayout
+            android:layout_weight="25"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -54,6 +78,7 @@
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:id="@+id/plus_sixty_upgrade"
                 android:background="@drawable/plus_sixty_upgrade"/>
 
@@ -66,6 +91,7 @@
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:id="@+id/no_grid_upgrade"
                 android:background="@drawable/no_grid_upgrade"/>
 
@@ -78,6 +104,7 @@
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:id="@+id/better_contrast_upgrade"
                 android:background="@drawable/better_contrast_upgrade"/>
 
@@ -90,6 +117,7 @@
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:id="@+id/no_penalty_upgrade"
                 android:background="@drawable/no_penalty_upgrade"/>
 
@@ -100,5 +128,8 @@
             </View>
             
         </LinearLayout>
+
+
+
     </LinearLayout>
 </LinearLayout>
