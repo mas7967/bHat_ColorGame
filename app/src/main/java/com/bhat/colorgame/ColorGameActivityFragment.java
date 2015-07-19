@@ -50,8 +50,8 @@ public class ColorGameActivityFragment extends Fragment implements AdapterView.O
         myGridView.setNumColumns(myColorGameController.getNumberOfColumns());
         Point size = new Point();
         getActivity().getWindowManager().getDefaultDisplay().getSize(size);
-        myGridView.setLayoutParams(new LinearLayout.LayoutParams(size.x, size.x));
-
+        myGridView.setVerticalSpacing(16);
+        myGridView.setHorizontalSpacing(16);
         myGridView.setOnItemClickListener(this);
 
         return myView;
@@ -64,7 +64,7 @@ public class ColorGameActivityFragment extends Fragment implements AdapterView.O
         Point size = new Point();
         getActivity().getWindowManager().getDefaultDisplay().getSize(size);
 
-        myColorGameController = new ColorGameController(size.x);
+        myColorGameController = new ColorGameController(size.x-100);
 
     }
 

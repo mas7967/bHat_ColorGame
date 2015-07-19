@@ -54,7 +54,7 @@ public class ColorGameController {
         int correctChoice = myRandomGenerator.nextInt(numberOfColumns*numberOfColumns)+1;
 
         int padding = 8;
-        int trueSize = (width - (2 * padding)) / numberOfColumns;
+        int trueSize = (width - (8 * padding)) / numberOfColumns;
 
         ColorGamePiece colorGamePiece;
         for (int i = 1; i <= (numberOfColumns * numberOfColumns); i++) {

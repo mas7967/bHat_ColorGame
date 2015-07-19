@@ -55,16 +55,10 @@ public class ColorGameGridAdapter extends BaseAdapter {
         } else {
             pieceView = view;
         }
-
         int size = colorGamePiece.getSize();
-        pieceView.setLayoutParams(new AbsListView.LayoutParams(size, size));
+        AbsListView.LayoutParams layoutParams = new AbsListView.LayoutParams(size, size);
 
-        if (colorGamePiece.hasPadding()) {
-            pieceView.setPaddingRelative(8, 8, 8, 8);
-        } else {
-            pieceView.setPaddingRelative(0, 0, 0, 0);
-        }
-
+        pieceView.setLayoutParams(layoutParams);
         pieceView.setBackgroundColor(colorGamePiece.getColor());
 
         return pieceView;
