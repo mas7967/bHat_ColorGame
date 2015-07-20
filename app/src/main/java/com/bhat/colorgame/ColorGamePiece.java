@@ -11,14 +11,12 @@ public class ColorGamePiece {
     private int size;
     private int color;
     private boolean isCorrect;
-    private boolean hasPadding;
 
-    public ColorGamePiece(int position, int size, int red, int green, int blue, boolean isCorrect, boolean hasPadding) {
+    public ColorGamePiece(int position, int size, int red, int green, int blue, boolean isCorrect) {
         this.position = position;
         this.size = size;
         this.color = Color.argb(255, red, green, blue);
         this.isCorrect = isCorrect;
-        this.hasPadding = hasPadding;
     }
 
     public int getPosition() {
@@ -51,13 +49,5 @@ public class ColorGamePiece {
 
     public void setIsCorrect(boolean isCorrect) {
         this.isCorrect = isCorrect;
-    }
-
-    public boolean hasPadding() {
-        return hasPadding;
-    }
-
-    public void setHasPadding(boolean hasPadding) {
-        this.hasPadding = hasPadding;
     }
 }

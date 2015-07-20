@@ -22,6 +22,8 @@ public class ColorGameController {
 
     private int numberOfColumns = 2;
 
+    private boolean hasPadding = true;
+
     Random myRandomGenerator = new Random();
 
     public ColorGameController(Context context, int width) {
@@ -37,9 +39,21 @@ public class ColorGameController {
 
     public void levelUp(){
         level++;
+        score++;
         colorDifference = Math.max(5, colorDifference - 5);
-        gridPieces = new ArrayList<ColorGamePiece>();
         createGamePieces();
+    }
+
+    public String getScoreString(){
+        return Integer.toString(score);
+    }
+
+    public void setColorDifference(int colorDifference) {
+        this.colorDifference = colorDifference;
+    }
+
+    public void setHasPadding(boolean hasPadding) {
+        this.hasPadding = hasPadding;
     }
 
     public int getNumberOfColumns() {
@@ -47,6 +61,7 @@ public class ColorGameController {
     }
 
     public void createGamePieces(){
+        gridPieces = new ArrayList<ColorGamePiece>();
         numberOfColumns = 9;
 
         if(level < 30){
@@ -60,16 +75,19 @@ public class ColorGameController {
         int correctChoice = myRandomGenerator.nextInt(numberOfColumns*numberOfColumns)+1;
 
         int padding = convertDpToPixels(8,context);
-        int trueSize = (convertDpToPixels(width,context) - ((numberOfColumns+1) * padding)) / numberOfColumns;
+        int trueSize = (convertDpToPixels(width, context) - ((numberOfColumns + 1) * padding)) / numberOfColumns;
+        if(!hasPadding) {
+            trueSize = (convertDpToPixels(width, context) - (2 * padding)) / numberOfColumns;
+        }
 
         ColorGamePiece colorGamePiece;
         for (int i = 1; i <= (numberOfColumns * numberOfColumns); i++) {
 
             if (i == correctChoice) {
                 colorGamePiece = new ColorGamePiece(i, trueSize, red + colorDifference,
-                        green + colorDifference, blue + colorDifference, true, true);
+                        green + colorDifference, blue + colorDifference, true);
             } else {
-                colorGamePiece = new ColorGamePiece(i, trueSize, red, green, blue, false, true);
+                colorGamePiece = new ColorGamePiece(i, trueSize, red, green, blue, false);
             }
 
             gridPieces.add(colorGamePiece);

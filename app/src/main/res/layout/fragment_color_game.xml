@@ -22,7 +22,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingRight="@dimen/activity_horizontal_margin"
-            android:paddingLeft="@dimen/activity_horizontal_margin">
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingBottom="32dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -77,12 +78,27 @@
                 android:layout_weight="1" >
             </View>
 
-            <ImageButton
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:id="@+id/plus_sixty_upgrade"
-                android:background="@drawable/plus_sixty_upgrade"/>
+                android:layout_height="wrap_content">
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/plus_sixty_upgrade"
+                    android:background="@drawable/plus_sixty_upgrade"/>
+                <TextView
+                    android:id="@+id/plus_sixty_upgrade_remaining_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/plus_sixty_upgrade"
+                    android:layout_alignRight="@id/plus_sixty_upgrade"
+                    android:text="5"
+                    android:textColor="#FFF"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:background="@drawable/upgrade_badge_background"/>
+            </RelativeLayout>
 
             <View
                 android:layout_width="0dp"
@@ -90,12 +106,27 @@
                 android:layout_weight="1" >
             </View>
 
-            <ImageButton
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:id="@+id/no_grid_upgrade"
-                android:background="@drawable/no_grid_upgrade"/>
+                android:layout_height="wrap_content">
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/no_grid_upgrade"
+                    android:background="@drawable/no_grid_upgrade"/>
+                <TextView
+                    android:id="@+id/no_grid_upgrade_remaining_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/no_grid_upgrade"
+                    android:layout_alignRight="@id/no_grid_upgrade"
+                    android:text="5"
+                    android:textColor="#FFF"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:background="@drawable/upgrade_badge_background"/>
+            </RelativeLayout>
 
             <View
                 android:layout_width="0dp"
@@ -103,12 +134,27 @@
                 android:layout_weight="1" >
             </View>
 
-            <ImageButton
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:id="@+id/better_contrast_upgrade"
-                android:background="@drawable/better_contrast_upgrade"/>
+                android:layout_height="wrap_content">
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/better_contrast_upgrade"
+                    android:background="@drawable/better_contrast_upgrade"/>
+                <TextView
+                    android:id="@+id/better_contrast_upgrade_remaining_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/better_contrast_upgrade"
+                    android:layout_alignRight="@id/better_contrast_upgrade"
+                    android:text="5"
+                    android:textColor="#FFF"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:background="@drawable/upgrade_badge_background"/>
+            </RelativeLayout>
 
             <View
                 android:layout_width="0dp"
@@ -116,12 +162,27 @@
                 android:layout_weight="1" >
             </View>
 
-            <ImageButton
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:id="@+id/no_penalty_upgrade"
-                android:background="@drawable/no_penalty_upgrade"/>
+                android:layout_height="wrap_content">
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/no_penalty_upgrade"
+                    android:background="@drawable/no_penalty_upgrade"/>
+                <TextView
+                    android:id="@+id/no_penalty_upgrade_remaining_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/no_penalty_upgrade"
+                    android:layout_alignRight="@id/no_penalty_upgrade"
+                    android:text="5"
+                    android:textColor="#FFF"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:background="@drawable/upgrade_badge_background"/>
+            </RelativeLayout>
 
             <View
                 android:layout_width="0dp"
