@@ -1,14 +1,13 @@
 package com.bhat.colorgame;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-
+/**
+ * Created by Mark Schillaci on 7/18/15.
+ */
 public class ColorGameActivity extends ActionBarActivity {
 
     @Override

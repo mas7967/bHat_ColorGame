@@ -1,57 +1,53 @@
 package com.bhat.colorgame;
 
-import android.content.DialogInterface;
-import android.graphics.Point;
+import android.content.res.Configuration;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.view.Display;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.view.View.OnTouchListener;
-
-import java.util.ArrayList;
-
 
 /**
- * A placeholder fragment containing a simple view.
+ * Created by Mark Schillaci on 7/18/15.
  */
 public class ColorGameActivityFragment extends Fragment implements AdapterView.OnItemClickListener{
 
-    ColorGameBoard colorGameBoard;
-
     View myView;
-    ColorGameView myCGV;
-
     GridView myGridView;
-    ColorGameGridAdapter myColorGameGridAdapter;
 
     ColorGameController myColorGameController;
-
+    ColorGameGridAdapter myColorGameGridAdapter;
 
     public ColorGameActivityFragment() {
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // Create the view
         myView = inflater.inflate(R.layout.fragment_color_game, container, false);
 
+        // Create the GridView
         myGridView = (GridView) myView.findViewById(R.id.color_game_grid);
 
-        myColorGameGridAdapter = new ColorGameGridAdapter(getActivity(), inflater, myColorGameController.getGridPieces());
-        myGridView.setAdapter(myColorGameGridAdapter);
+        // Get screen width in dp, create GameController
+        Configuration configuration = getActivity().getResources().getConfiguration();
+        int screenWidthDp = configuration.screenWidthDp;
+        myColorGameController = new ColorGameController(getActivity(), screenWidthDp);
 
+        // Create GridAdapter using GameController
+        myColorGameGridAdapter = new ColorGameGridAdapter(getActivity(), inflater, myColorGameController.getGridPieces());
+
+        // Set GridView's GameAdapter to that just made, give number of columns
+        myGridView.setAdapter(myColorGameGridAdapter);
         myGridView.setNumColumns(myColorGameController.getNumberOfColumns());
-        Point size = new Point();
-        getActivity().getWindowManager().getDefaultDisplay().getSize(size);
-        myGridView.setVerticalSpacing(16);
-        myGridView.setHorizontalSpacing(16);
+
+        // Set GridView's spacing to 16 pixels, but converted to dp using GameController function
+        myGridView.setVerticalSpacing(ColorGameController.convertDpToPixels(8,getActivity()));
+        myGridView.setHorizontalSpacing(ColorGameController.convertDpToPixels(8,getActivity()));
         myGridView.setOnItemClickListener(this);
 
         return myView;
@@ -61,11 +57,6 @@ public class ColorGameActivityFragment extends Fragment implements AdapterView.O
     public void onCreate(Bundle savedInstanceState) {
         setRetainInstance(true);
         super.onCreate(savedInstanceState);
-        Point size = new Point();
-        getActivity().getWindowManager().getDefaultDisplay().getSize(size);
-
-        myColorGameController = new ColorGameController(size.x-100);
-
     }
 
     @Override

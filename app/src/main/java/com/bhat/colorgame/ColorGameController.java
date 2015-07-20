@@ -1,5 +1,8 @@
 package com.bhat.colorgame;
 
+import android.content.Context;
+import android.content.res.Resources;
+import android.util.TypedValue;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -10,6 +13,8 @@ public class ColorGameController {
 
     private ArrayList<ColorGamePiece> gridPieces;
 
+    private Context context;
+
     private int score = 0;
     private int width;
     private int level = 1;
@@ -19,7 +24,8 @@ public class ColorGameController {
 
     Random myRandomGenerator = new Random();
 
-    public ColorGameController(int width) {
+    public ColorGameController(Context context, int width) {
+        this.context = context;
         this.width = width;
         gridPieces = new ArrayList<ColorGamePiece>();
         createGamePieces();
@@ -53,8 +59,8 @@ public class ColorGameController {
 
         int correctChoice = myRandomGenerator.nextInt(numberOfColumns*numberOfColumns)+1;
 
-        int padding = 8;
-        int trueSize = (width - (8 * padding)) / numberOfColumns;
+        int padding = convertDpToPixels(8,context);
+        int trueSize = (convertDpToPixels(width,context) - ((numberOfColumns+1) * padding)) / numberOfColumns;
 
         ColorGamePiece colorGamePiece;
         for (int i = 1; i <= (numberOfColumns * numberOfColumns); i++) {
@@ -69,7 +75,15 @@ public class ColorGameController {
             gridPieces.add(colorGamePiece);
         }
 
+    }
 
+    public static int convertDpToPixels(float dp, Context context){
+        Resources resources = context.getResources();
+        return (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                dp,
+                resources.getDisplayMetrics()
+        );
     }
 
 
