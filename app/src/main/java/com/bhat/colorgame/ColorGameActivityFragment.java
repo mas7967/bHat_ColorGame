@@ -22,7 +22,14 @@ public class ColorGameActivityFragment extends Fragment implements AdapterView.O
 
     View myView;
     GridView myGridView;
+    ColorGameController myColorGameController;
+    ColorGameGridAdapter myColorGameGridAdapter;
+
     TextView timeLeftText;
+    private static final String FORMAT = "%01d:%02d";
+    CountDownTimer timeLeftCountDownTimer;
+    long timeLeftMilliseconds;
+
     TextView scoreText;
 
     ImageButton plusSixtyUpgrade;
@@ -38,14 +45,6 @@ public class ColorGameActivityFragment extends Fragment implements AdapterView.O
     TextView noGridUpgradeRemainingText;
     TextView betterContrastUpgradeRemainingText;
     TextView noPenaltyUpgradeRemainingText;
-
-    CountDownTimer timeLeftCountDownTimer;
-    long timeLeftMilliseconds;
-
-    ColorGameController myColorGameController;
-    ColorGameGridAdapter myColorGameGridAdapter;
-
-    private static final String FORMAT = "%01d:%02d";
 
     private boolean hasPenalty = true;
     private boolean canClickNoPenalty = true;
@@ -100,7 +99,7 @@ public class ColorGameActivityFragment extends Fragment implements AdapterView.O
         // Set up our Score
         scoreText = (TextView) myView.findViewById(R.id.scoreText);
 
-        // Set up our ImageButtons for upgrades
+        // Set up our ImageButtons for upgrades, along with badges
         plusSixtyUpgrade = (ImageButton) myView.findViewById(R.id.plus_sixty_upgrade);
         plusSixtyUpgrade.setOnTouchListener(this);
         noGridUpgrade = (ImageButton) myView.findViewById(R.id.no_grid_upgrade);
@@ -115,26 +114,11 @@ public class ColorGameActivityFragment extends Fragment implements AdapterView.O
         betterContrastUpgradeRemainingText = (TextView) myView.findViewById(R.id.better_contrast_upgrade_remaining_text);
         noPenaltyUpgradeRemainingText = (TextView) myView.findViewById(R.id.no_penalty_upgrade_remaining_text);
 
-        // Return our view for some reason...
+        // Return our view
         return myView;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        setRetainInstance(true);
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-
+    // Handles the clicking of the game pieces (colored squares)
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
@@ -162,6 +146,7 @@ public class ColorGameActivityFragment extends Fragment implements AdapterView.O
         }
     }
 
+    // Handles clicking of the upgrade buttons and putting the upgrades into effect
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         // Make sure that the event is an ACTION_DOWN, then proceed
@@ -183,23 +168,13 @@ public class ColorGameActivityFragment extends Fragment implements AdapterView.O
                         canClickNoGrid = false;
                         noGridUpgradeRemaining--;
                         noGridUpgradeRemainingText.setText(Integer.toString(noGridUpgradeRemaining));
-                        myGridView.setVerticalSpacing(ColorGameController.convertDpToPixels(0, getActivity()));
-                        myGridView.setHorizontalSpacing(ColorGameController.convertDpToPixels(0, getActivity()));
-                        myColorGameController.setHasPadding(false);
-                        myColorGameController.createGamePieces();
-                        myColorGameGridAdapter.setGridPieces(myColorGameController.getGridPieces());
-                        myColorGameGridAdapter.notifyDataSetChanged();
+                        updatePadding(0, false);
 
                         Handler handler = new Handler();
                         final Runnable runnable = new Runnable() {
                             public void run() {
                                 canClickNoGrid = true;
-                                myGridView.setVerticalSpacing(ColorGameController.convertDpToPixels(8, getActivity()));
-                                myGridView.setHorizontalSpacing(ColorGameController.convertDpToPixels(8, getActivity()));
-                                myColorGameController.setHasPadding(true);
-                                myColorGameController.createGamePieces();
-                                myColorGameGridAdapter.setGridPieces(myColorGameController.getGridPieces());
-                                myColorGameGridAdapter.notifyDataSetChanged();
+                                updatePadding(8, true);
                             }
                         };
                         // Take away no grid upgrade after 10 seconds
@@ -243,6 +218,17 @@ public class ColorGameActivityFragment extends Fragment implements AdapterView.O
         return true;
     }
 
+    // Updates padding when the no grid upgrade is turned on/off
+    public void updatePadding(int newPadding, boolean newHasPadding){
+        myGridView.setVerticalSpacing(ColorGameController.convertDpToPixels(newPadding, getActivity()));
+        myGridView.setHorizontalSpacing(ColorGameController.convertDpToPixels(newPadding, getActivity()));
+        myColorGameController.setHasPadding(newHasPadding);
+        myColorGameController.createGamePieces();
+        myColorGameGridAdapter.setGridPieces(myColorGameController.getGridPieces());
+        myColorGameGridAdapter.notifyDataSetChanged();
+    }
+
+    // Handles a change in the amount of time left by canceling countdown and creating new one
     public CountDownTimer updateTimer(CountDownTimer countDownTimer, long increaseAmount){
         countDownTimer.cancel();
         return new CountDownTimer(increaseAmount + timeLeftMilliseconds, 20) {
@@ -258,6 +244,22 @@ public class ColorGameActivityFragment extends Fragment implements AdapterView.O
                 timeLeftText.setText("GAME OVER!");
             }
         }.start();
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        setRetainInstance(true);
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 
 }
