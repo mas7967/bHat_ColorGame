@@ -2,6 +2,7 @@ package com.bhat.colorgame;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.util.TypedValue;
 import java.util.ArrayList;
 import java.util.Random;
@@ -19,6 +20,7 @@ public class ColorGameController {
     private int width;
     private int level = 1;
     private int colorDifference = 105;
+    private int trueSize;
 
     private int numberOfColumns = 2;
 
@@ -74,11 +76,7 @@ public class ColorGameController {
 
         int correctChoice = myRandomGenerator.nextInt(numberOfColumns*numberOfColumns)+1;
 
-        int padding = convertDpToPixels(8,context);
-        int trueSize = (convertDpToPixels(width, context) - ((numberOfColumns + 1) * padding)) / numberOfColumns;
-        if(!hasPadding) {
-            trueSize = (convertDpToPixels(width, context) - (2 * padding)) / numberOfColumns;
-        }
+        updateTrueSize();
 
         ColorGamePiece colorGamePiece;
         for (int i = 1; i <= (numberOfColumns * numberOfColumns); i++) {
@@ -104,5 +102,36 @@ public class ColorGameController {
         );
     }
 
+    public void updateTrueSize() {
+        int padding = convertDpToPixels(8, context);
+        trueSize = (convertDpToPixels(width, context) - ((numberOfColumns + 1) * padding)) / numberOfColumns;
+        if (!hasPadding) {
+            trueSize = (convertDpToPixels(width, context) - (2 * padding)) / numberOfColumns;
+        }
+    }
+
+
+    public void updateGamePieceSizes() {
+        updateTrueSize();
+
+        ColorGamePiece colorGamePiece;
+        for (int i = 0; i < (numberOfColumns * numberOfColumns); i++) {
+            colorGamePiece = (ColorGamePiece) gridPieces.get(i);
+            colorGamePiece.setSize(trueSize);
+        }
+    }
+
+    public void updateGamePieceDifferences() {
+        ColorGamePiece colorGamePiece;
+        for (int i = 0; i < (numberOfColumns * numberOfColumns); i++) {
+            colorGamePiece = (ColorGamePiece) gridPieces.get(i);
+
+            if(colorGamePiece.isCorrect()) {
+                colorGamePiece.setColor(Math.min(Color.red(colorGamePiece.getColor()) + colorDifference, 255),
+                        Math.min(Color.green(colorGamePiece.getColor()) + colorDifference, 255),
+                        Math.min(Color.blue(colorGamePiece.getColor()) + colorDifference, 255));
+            }
+        }
+    }
 
 }

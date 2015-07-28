@@ -187,10 +187,10 @@ public class ColorGameActivityFragment extends Fragment implements AdapterView.O
                     if (betterContrastUpgradeRemaining > 0) {
                         betterContrastUpgradeRemaining--;
                         betterContrastUpgradeRemainingText.setText(Integer.toString(betterContrastUpgradeRemaining));
+
                         myColorGameController.setColorDifference(105);
-                        myColorGameController.createGamePieces();
-                        myColorGameGridAdapter.setGridPieces(myColorGameController.getGridPieces());
-                        myColorGameGridAdapter.notifyDataSetChanged();
+                        myColorGameController.updateGamePieceDifferences();
+                        setAndNotify();
                     }
                     break;
 
@@ -223,9 +223,9 @@ public class ColorGameActivityFragment extends Fragment implements AdapterView.O
         myGridView.setVerticalSpacing(ColorGameController.convertDpToPixels(newPadding, getActivity()));
         myGridView.setHorizontalSpacing(ColorGameController.convertDpToPixels(newPadding, getActivity()));
         myColorGameController.setHasPadding(newHasPadding);
-        myColorGameController.createGamePieces();
-        myColorGameGridAdapter.setGridPieces(myColorGameController.getGridPieces());
-        myColorGameGridAdapter.notifyDataSetChanged();
+
+        myColorGameController.updateGamePieceSizes();
+        setAndNotify();
     }
 
     // Handles a change in the amount of time left by canceling countdown and creating new one
@@ -244,6 +244,12 @@ public class ColorGameActivityFragment extends Fragment implements AdapterView.O
                 timeLeftText.setText("GAME OVER!");
             }
         }.start();
+    }
+
+    // Set the grid pieces and notify the adapater of a data set change
+    private void setAndNotify() {
+        myColorGameGridAdapter.setGridPieces(myColorGameController.getGridPieces());
+        myColorGameGridAdapter.notifyDataSetChanged();
     }
 
     @Override
