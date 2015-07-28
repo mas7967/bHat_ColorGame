@@ -11,7 +11,7 @@ The user has options for temporary power ups which make the game easier. (More o
 
 ## To do List v1.0
 
-    ~~ - Make the program use a proper GridView and Adapter ~~
+    ~~Make the program use a proper GridView and Adapter~~
     ~~ - Implement a timer for the game (you run out of time you lose) ~~
     ~~ - Implement a scoring mechanism ~~
     ~~ - Implement the power ups feature ~~
@@ -24,7 +24,7 @@ The user has options for temporary power ups which make the game easier. (More o
     - Implement a high score system, local
     - Make a more interesting scoring mechanism: the quicker you click correct pieces, the higher the score goes
     ~~ - Perhaps some custom graphics in there? ~~ (Can't remember where I was going with this)
-    - Better contrast and no grid upgrades redraw the screen, is it possible to get rid of that?
+    ~~Better contrast and no grid upgrades redraw the screen, is it possible to get rid of that?~~
     - When the game is over, actually stop the game (runs indefinitely for now)
     - Work on the action bar and settings
 
