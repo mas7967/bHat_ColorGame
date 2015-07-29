@@ -88,7 +88,7 @@
                     android:id="@+id/plus_sixty_upgrade"
                     android:background="@drawable/plus_sixty_upgrade"/>
                 <TextView
-                    android:id="@+id/plus_sixty_upgrade_remaining_text"
+                    android:id="@+id/plus_sixty_upgrade_badge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@id/plus_sixty_upgrade"
@@ -116,7 +116,7 @@
                     android:id="@+id/no_grid_upgrade"
                     android:background="@drawable/no_grid_upgrade"/>
                 <TextView
-                    android:id="@+id/no_grid_upgrade_remaining_text"
+                    android:id="@+id/no_grid_upgrade_badge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@id/no_grid_upgrade"
@@ -144,7 +144,7 @@
                     android:id="@+id/better_contrast_upgrade"
                     android:background="@drawable/better_contrast_upgrade"/>
                 <TextView
-                    android:id="@+id/better_contrast_upgrade_remaining_text"
+                    android:id="@+id/better_contrast_upgrade_badge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@id/better_contrast_upgrade"
@@ -172,7 +172,7 @@
                     android:id="@+id/no_penalty_upgrade"
                     android:background="@drawable/no_penalty_upgrade"/>
                 <TextView
-                    android:id="@+id/no_penalty_upgrade_remaining_text"
+                    android:id="@+id/no_penalty_upgrade_badge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@id/no_penalty_upgrade"

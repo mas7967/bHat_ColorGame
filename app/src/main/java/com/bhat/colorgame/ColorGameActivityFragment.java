@@ -37,14 +37,10 @@ public class ColorGameActivityFragment extends Fragment implements AdapterView.O
     ImageButton betterContrastUpgrade;
     ImageButton noPenaltyUpgrade;
 
-    private int plusSixtyUpgradeRemaining = 5;
-    private int noGridUpgradeRemaining = 5;
-    private int betterContrastUpgradeRemaining = 5;
-    private int noPenaltyUpgradeRemaining = 5;
-    TextView plusSixtyUpgradeRemainingText;
-    TextView noGridUpgradeRemainingText;
-    TextView betterContrastUpgradeRemainingText;
-    TextView noPenaltyUpgradeRemainingText;
+    UpgradeBadge plusSixtyUpgradeBadge;
+    UpgradeBadge noGridUpgradeBadge;
+    UpgradeBadge betterContrastUpgradeBadge;
+    UpgradeBadge noPenaltyUpgradeBadge;
 
     private boolean hasPenalty = true;
     private boolean canClickNoPenalty = true;
@@ -100,19 +96,19 @@ public class ColorGameActivityFragment extends Fragment implements AdapterView.O
         scoreText = (TextView) myView.findViewById(R.id.scoreText);
 
         // Set up our ImageButtons for upgrades, along with badges
-        plusSixtyUpgrade = (ImageButton) myView.findViewById(R.id.plus_sixty_upgrade);
+        plusSixtyUpgrade      = (ImageButton) myView.findViewById(R.id.plus_sixty_upgrade);
         plusSixtyUpgrade.setOnTouchListener(this);
-        noGridUpgrade = (ImageButton) myView.findViewById(R.id.no_grid_upgrade);
+        noGridUpgrade         = (ImageButton) myView.findViewById(R.id.no_grid_upgrade);
         noGridUpgrade.setOnTouchListener(this);
         betterContrastUpgrade = (ImageButton) myView.findViewById(R.id.better_contrast_upgrade);
         betterContrastUpgrade.setOnTouchListener(this);
-        noPenaltyUpgrade = (ImageButton) myView.findViewById(R.id.no_penalty_upgrade);
+        noPenaltyUpgrade      = (ImageButton) myView.findViewById(R.id.no_penalty_upgrade);
         noPenaltyUpgrade.setOnTouchListener(this);
 
-        plusSixtyUpgradeRemainingText = (TextView) myView.findViewById(R.id.plus_sixty_upgrade_remaining_text);
-        noGridUpgradeRemainingText = (TextView) myView.findViewById(R.id.no_grid_upgrade_remaining_text);
-        betterContrastUpgradeRemainingText = (TextView) myView.findViewById(R.id.better_contrast_upgrade_remaining_text);
-        noPenaltyUpgradeRemainingText = (TextView) myView.findViewById(R.id.no_penalty_upgrade_remaining_text);
+        plusSixtyUpgradeBadge      = new UpgradeBadge(getActivity(), myView, 5, R.id.plus_sixty_upgrade_badge);
+        noGridUpgradeBadge         = new UpgradeBadge(getActivity(), myView, 5, R.id.no_grid_upgrade_badge);
+        betterContrastUpgradeBadge = new UpgradeBadge(getActivity(), myView, 5, R.id.better_contrast_upgrade_badge);
+        noPenaltyUpgradeBadge      = new UpgradeBadge(getActivity(), myView, 5, R.id.no_penalty_upgrade_badge);
 
         // Return our view
         return myView;
@@ -154,20 +150,18 @@ public class ColorGameActivityFragment extends Fragment implements AdapterView.O
             // Switch on ID's to figure out what was clicked
             switch (v.getId()) {
                 case R.id.plus_sixty_upgrade:
-                    // Do plus sixty
-                    if (plusSixtyUpgradeRemaining > 0) {
-                        plusSixtyUpgradeRemaining--;
-                        plusSixtyUpgradeRemainingText.setText(Integer.toString(plusSixtyUpgradeRemaining));
+                    // Do plus sixty upgrade
+                    if (plusSixtyUpgradeBadge.getRemainingUpgrades() > 0) {
+                        plusSixtyUpgradeBadge.useUpgrade();
                         timeLeftCountDownTimer = updateTimer(timeLeftCountDownTimer, 60000);
                     }
                     break;
 
                 case R.id.no_grid_upgrade:
-                    // Do no-grid upgrade if not already activated
-                    if ( (canClickNoGrid) && (noGridUpgradeRemaining > 0) ){
+                    // Do no grid upgrade if not already activated
+                    if ( (canClickNoGrid) && (noGridUpgradeBadge.getRemainingUpgrades() > 0) ){
                         canClickNoGrid = false;
-                        noGridUpgradeRemaining--;
-                        noGridUpgradeRemainingText.setText(Integer.toString(noGridUpgradeRemaining));
+                        noGridUpgradeBadge.useUpgrade();
                         updatePadding(0, false);
 
                         Handler handler = new Handler();
@@ -184,10 +178,8 @@ public class ColorGameActivityFragment extends Fragment implements AdapterView.O
 
                 case R.id.better_contrast_upgrade:
                     // Do better contrast upgrade
-                    if (betterContrastUpgradeRemaining > 0) {
-                        betterContrastUpgradeRemaining--;
-                        betterContrastUpgradeRemainingText.setText(Integer.toString(betterContrastUpgradeRemaining));
-
+                    if (betterContrastUpgradeBadge.getRemainingUpgrades() > 0) {
+                        betterContrastUpgradeBadge.useUpgrade();
                         myColorGameController.setColorDifference(105);
                         myColorGameController.updateGamePieceDifferences();
                         setAndNotify();
@@ -196,11 +188,11 @@ public class ColorGameActivityFragment extends Fragment implements AdapterView.O
 
                 case R.id.no_penalty_upgrade:
                     // Do no penalty upgrade if not already activated
-                    if ( (canClickNoPenalty) && (noPenaltyUpgradeRemaining > 0) ){
-                        noPenaltyUpgradeRemaining--;
-                        noPenaltyUpgradeRemainingText.setText(Integer.toString(noPenaltyUpgradeRemaining));
+                    if ( (canClickNoPenalty) && (noPenaltyUpgradeBadge.getRemainingUpgrades() > 0) ){
+                        noPenaltyUpgradeBadge.useUpgrade();
                         canClickNoPenalty = false;
                         hasPenalty = false;
+
                         Handler handler = new Handler();
                         final Runnable runnable = new Runnable() {
                             public void run() {
