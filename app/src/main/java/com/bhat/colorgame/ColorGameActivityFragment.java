@@ -25,18 +25,16 @@ public class ColorGameActivityFragment extends Fragment implements AdapterView.O
     ColorGameController myColorGameController;
     ColorGameGridAdapter myColorGameGridAdapter;
 
-    TextView timeLeftText;
-    private static final String FORMAT = "%01d:%02d";
-    CountDownTimer timeLeftCountDownTimer;
-    long timeLeftMilliseconds;
+    GameTimer timeLeft;
+    private static final long startingTime = 60000;
+    private static final int frequency = 20;
 
-    TextView scoreText;
+    ScoreKeeper scoreKeeper;
 
     ImageButton plusSixtyUpgrade;
     ImageButton noGridUpgrade;
     ImageButton betterContrastUpgrade;
     ImageButton noPenaltyUpgrade;
-
     UpgradeBadge plusSixtyUpgradeBadge;
     UpgradeBadge noGridUpgradeBadge;
     UpgradeBadge betterContrastUpgradeBadge;
@@ -76,24 +74,9 @@ public class ColorGameActivityFragment extends Fragment implements AdapterView.O
         myGridView.setHorizontalSpacing(ColorGameController.convertDpToPixels(8, getActivity()));
         myGridView.setOnItemClickListener(this);
 
-        // Set up our Time left
-        timeLeftText = (TextView) myView.findViewById(R.id.timeText);
-        timeLeftCountDownTimer = new CountDownTimer(60000, 20) {
-            public void onTick(long millisUntilFinished) {
-                timeLeftMilliseconds = millisUntilFinished;
-                timeLeftText.setText("" + String.format(FORMAT,
-                        TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished),
-                        TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(
-                                TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
-            }
-
-            public void onFinish() {
-                timeLeftText.setText("GAME OVER!");
-            }
-        }.start();
-
-        // Set up our Score
-        scoreText = (TextView) myView.findViewById(R.id.scoreText);
+        // Set up our Time Left and Score texts
+        timeLeft = new GameTimer(getActivity(), myView, startingTime, frequency, R.id.timeText);
+        scoreKeeper = new ScoreKeeper(getActivity(), myView, R.id.scoreText);
 
         // Set up our ImageButtons for upgrades, along with badges
         plusSixtyUpgrade      = (ImageButton) myView.findViewById(R.id.plus_sixty_upgrade);
@@ -126,18 +109,17 @@ public class ColorGameActivityFragment extends Fragment implements AdapterView.O
             // Level up the player
             myColorGameController.levelUp();
             myGridView.setNumColumns(myColorGameController.getNumberOfColumns());
-            myColorGameGridAdapter.setGridPieces(myColorGameController.getGridPieces());
-            myColorGameGridAdapter.notifyDataSetChanged();
+            setAndNotify();
 
             // Update the score text
-            scoreText.setText("Score: " + myColorGameController.getScoreString());
+            scoreKeeper.increaseScore(System.currentTimeMillis());
 
             // Increase the time left by 3 seconds
-            timeLeftCountDownTimer = updateTimer(timeLeftCountDownTimer, 3000);
+            timeLeft.updateTimer(3000);
         } else {
             // If the piece isn't correct, check if they have the no penalty upgrade and update
             if(hasPenalty){
-                timeLeftCountDownTimer = updateTimer(timeLeftCountDownTimer, -1000);
+                timeLeft.updateTimer(-1000);
             }
         }
     }
@@ -153,7 +135,7 @@ public class ColorGameActivityFragment extends Fragment implements AdapterView.O
                     // Do plus sixty upgrade
                     if (plusSixtyUpgradeBadge.getRemainingUpgrades() > 0) {
                         plusSixtyUpgradeBadge.useUpgrade();
-                        timeLeftCountDownTimer = updateTimer(timeLeftCountDownTimer, 60000);
+                        timeLeft.updateTimer(60000);
                     }
                     break;
 
@@ -218,24 +200,6 @@ public class ColorGameActivityFragment extends Fragment implements AdapterView.O
 
         myColorGameController.updateGamePieceSizes();
         setAndNotify();
-    }
-
-    // Handles a change in the amount of time left by canceling countdown and creating new one
-    public CountDownTimer updateTimer(CountDownTimer countDownTimer, long increaseAmount){
-        countDownTimer.cancel();
-        return new CountDownTimer(increaseAmount + timeLeftMilliseconds, 20) {
-            public void onTick(long millisUntilFinished) {
-                timeLeftMilliseconds = millisUntilFinished;
-                timeLeftText.setText("" + String.format(FORMAT,
-                        TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished),
-                        TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(
-                                TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
-            }
-
-            public void onFinish() {
-                timeLeftText.setText("GAME OVER!");
-            }
-        }.start();
     }
 
     // Set the grid pieces and notify the adapater of a data set change

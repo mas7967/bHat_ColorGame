@@ -29,9 +29,9 @@ Upgrade | Length (sec) | Brief Description
 - [ ] When the game is over, actually stop the game (runs indefinitely for now)
 - [ ] Implement a high score system, local
 - [ ] Work on the action bar and settings
-- [ ] Study game dynamics some, make the game somehow harder, or start with less upgrades?
-- [ ] Consider changing the +60 seconds to +30, or make the penalty higher? (see above)
-- [ ] Make a more interesting scoring mechanism: the quicker you click correct pieces, the higher the score goes
+- [x] Study game dynamics some, make the game somehow harder, or start with less upgrades?
+- [x] Consider changing the +60 seconds to +30, or make the penalty higher? (see above)
+- [x] Make a more interesting scoring mechanism: the quicker you click correct pieces, the higher the score goes
 
 
 ### To do List for v3.0

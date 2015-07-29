@@ -16,7 +16,6 @@ public class ColorGameController {
 
     private Context context;
 
-    private int score = 0;
     private int width;
     private int level = 1;
     private int colorDifference = 105;
@@ -41,13 +40,8 @@ public class ColorGameController {
 
     public void levelUp(){
         level++;
-        score++;
         colorDifference = Math.max(5, colorDifference - 5);
         createGamePieces();
-    }
-
-    public String getScoreString(){
-        return Integer.toString(score);
     }
 
     public void setColorDifference(int colorDifference) {
